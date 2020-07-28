@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PandemicSim
 {
@@ -93,6 +92,13 @@ namespace PandemicSim
             };
         }
 
+        /// <summary>
+        /// Parses arguments, creates a <see cref="Options"/> object from
+        /// the parsed data and returns the object.
+        /// </summary>
+        /// <param name="args">Command line arguments.</param>
+        /// <returns>A <see cref="Options"/> object containing 
+        /// the game options.</returns>
         public static Options ParseArguments(string[] args)
         {
             Options op = new Options();

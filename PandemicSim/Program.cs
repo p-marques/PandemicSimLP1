@@ -4,6 +4,10 @@ namespace PandemicSim
 {
     class Program
     {
+        /// <summary>
+        /// Program stating point.
+        /// </summary>
+        /// <param name="args">Command line arguments.</param>
         static void Main(string[] args)
         {
             // Handle arguments
