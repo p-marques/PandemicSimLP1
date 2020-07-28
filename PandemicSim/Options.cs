@@ -25,9 +25,9 @@ namespace PandemicSim
         public static string[] HelpMessages { get; }
 
         /// <summary>
-        /// The size of the map. MapSize x MapSize
+        /// The size of the grid. GridSize x GridSize
         /// </summary>
-        public int MapSize { get; private set; }
+        public int GridSize { get; private set; }
 
         /// <summary>
         /// The number of agents at the start of the simulation
@@ -82,7 +82,7 @@ namespace PandemicSim
 
             HelpMessages = new string[7]
             {
-                "-N: map size. Usage: -N <value>",
+                "-N: grid size. Usage: -N <value>",
                 "-M: number of agents in the simulation. Usage: -M <value>",
                 "-L: infected agent lifespan. Usage: -L <value>",
                 "-Tinf: turn number of first infection. Usage: -Tinf <value>",
@@ -188,7 +188,7 @@ namespace PandemicSim
             // Everything ok
             if (op.ParserResult == OptionsParserResult.Ok)
             {
-                op.MapSize = optionsValues[mandatoryArgs[0]];
+                op.GridSize = optionsValues[mandatoryArgs[0]];
                 op.AgentInitialCount = optionsValues[mandatoryArgs[1]];
                 op.InfectedLifeSpan = optionsValues[mandatoryArgs[2]];
                 op.FirstInfectionTurn = optionsValues[mandatoryArgs[3]];

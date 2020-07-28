@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PandemicSim
 {
@@ -10,9 +8,14 @@ namespace PandemicSim
     public class Simulation
     {
         /// <summary>
-        /// The game's options.
+        /// The simulation's options.
         /// </summary>
-        private readonly Options gameOptions;
+        private readonly Options simOptions;
+
+        /// <summary>
+        /// The simulation's grid.
+        /// </summary>
+        private readonly Grid simGrid;
 
         /// <summary>
         /// Creates a new instance of <see cref="Simulation"/>.
@@ -20,7 +23,9 @@ namespace PandemicSim
         /// <param name="options">The game's options.</param>
         public Simulation(Options options)
         {
-            gameOptions = options;
+            simOptions = options;
+
+            simGrid = new Grid(simOptions.GridSize);
         }
 
         /// <summary>
