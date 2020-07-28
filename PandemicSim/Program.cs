@@ -40,7 +40,11 @@ namespace PandemicSim
             }
             else
             {
-                Console.WriteLine("Everything OK!");
+                // Creates simulation instance
+                Simulation sim = new Simulation(options);
+
+                // Start simulation run
+                sim.Run();
             }
         }
     }
