@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace PandemicSim
 {
@@ -81,10 +78,7 @@ namespace PandemicSim
         public void Run()
         {
             string holder;
-            List<TurnReport> turnReports;
-            TurnReport turnReport;
-
-            turnReports = new List<TurnReport>();
+            List<TurnReport> turnReports = null;
 
             if (!simOptions.ShowSimulation)
             {
@@ -136,18 +130,20 @@ namespace PandemicSim
                 // If user asked to generate stats file
                 if (simOptions.OutputSimulationToFile)
                 {
-                    turnReport = new TurnReport(HealthyAgentCount,
-                                            InfectedAgentCount,
-                                            DeadAgentCount);
+                    if (turnReports == null)
+                        turnReports = new List<TurnReport>();
 
-                    turnReports.Add(turnReport);
+                    turnReports.Add(new TurnReport(HealthyAgentCount,
+                                                   InfectedAgentCount,
+                                                   DeadAgentCount));
                 }
 
                 if (!IsAnyAgentAlive)
                     break;
             }
 
-            // TODO Save file if user asked for it
+            if (simOptions.OutputSimulationToFile)
+                SaveReport(turnReports);
         }
 
         /// <summary>
@@ -168,18 +164,31 @@ namespace PandemicSim
             }
         }
 
-        private void SaveReport(List<TurnReport> report) 
+        /// <summary>
+        /// Save report to file.
+        /// </summary>
+        /// <param name="reports">The round reports.</param>
+        private void SaveReport(List<TurnReport> reports) 
         {
-            StringBuilder tvs = new StringBuilder();
-            string path = @"\ " + simOptions.OutputFileName + ".tvs";
+            string holder;
+            string path = simOptions.OutputFileName;
 
-            foreach ( TurnReport linerport in report ) 
+            if (!simOptions.OutputFileName.EndsWith(".tsv"))
             {
-                string line = linerport.Healthy + "," + linerport.Infected + "," + linerport.Dead;
-                tvs.AppendLine(line);
+                path += ".tsv";
             }
 
-            File.AppendAllText( path, tvs.ToString() );
+            using StreamWriter sw = File.CreateText(path);
+
+            for (int i = 0; i < reports.Count; i++)
+            {
+                holder = $"{reports[i].Healthy}\t{reports[i].Infected}";
+                holder += $"\t{reports[i].Dead}";
+
+                sw.WriteLine(holder);
+            }
+
+            sw.Close();
         }
     }
 }
