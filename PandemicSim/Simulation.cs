@@ -18,6 +18,11 @@ namespace PandemicSim
         private readonly Grid simGrid;
 
         /// <summary>
+        /// The simulation's agents.
+        /// </summary>
+        private readonly Agent[] agents;
+
+        /// <summary>
         /// Creates a new instance of <see cref="Simulation"/>.
         /// </summary>
         /// <param name="options">The game's options.</param>
@@ -26,6 +31,13 @@ namespace PandemicSim
             simOptions = options;
 
             simGrid = new Grid(simOptions.GridSize);
+
+            agents = new Agent[simOptions.AgentInitialCount];
+
+            for (int i = 0; i < agents.Length; i++)
+            {
+                agents[i] = new Agent(i);
+            }
         }
 
         /// <summary>
