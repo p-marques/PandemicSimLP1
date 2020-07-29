@@ -7,7 +7,7 @@ namespace PandemicSim
     /// </summary>
     /// Stores the number of healthy, infected and dead agents
     /// </summary>
-    class TurnReport
+    public struct TurnReport
     {
         public int Healthy { get; }
         public int Infected { get; }
