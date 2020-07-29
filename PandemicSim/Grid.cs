@@ -33,5 +33,20 @@ namespace PandemicSim
                 }
             }
         }
+
+        /// <summary>
+        /// Place an <see cref="Agent"/> at a given location on the grid.
+        /// </summary>
+        /// <param name="agent">The <see cref="Agent"/> to place.</param>
+        /// <param name="row">The row index.</param>
+        /// <param name="column">The column index.</param>
+        public void PlaceAgent(Agent agent, int row, int column)
+        {
+            Tile tile = tiles[row][column];
+
+            agent.SetTile(tile);
+
+            tile.MoveAgentIn(agent);
+        }
     }
 }

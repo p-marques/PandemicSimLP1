@@ -5,24 +5,26 @@ using System.Text;
 namespace PandemicSim
 {
     /// <summary>
-    /// Represents one location on the Grid
+    /// Represents one location on the Grid.
     /// <summary>
-    class Tile
+    public class Tile
     {
         /// <summary>
-        /// pos contains the coord with the position
+        /// The position of the tile on the grid.
         /// <summary>
         public Coord Pos { get; }
 
         /// <summary>
-        /// Represents all agents on this tile
+        /// Represents all agents on this tile.
         /// <summary>
         public IList<Agent> Agents { get; }
 
-
-
         /// <summary>
-        /// Sets the position of the tile
+        /// Creates instance of <see cref="Tile"/>.
+        /// </summary>
+        /// <param name="row">The row position of the tile on the grid.</param>
+        /// <param name="column">The column position of the tile 
+        /// on the grid.</param>
         public Tile(int row, int column) 
         {
             Pos = new Coord(row, column);
@@ -30,20 +32,20 @@ namespace PandemicSim
         }
 
         /// <summary>
-        /// Moves agents to the tile
-        /// <summary>
-        public void moveAgentIn(Agent Agent) 
+        /// Move <see cref="Agent"/> in to this tile.
+        /// </summary>
+        /// <param name="Agent">The <see cref="Agent"/> to move in.</param>
+        public void MoveAgentIn(Agent Agent) 
         {
             this.Agents.Add(Agent);
             Agent.SetTile(this);
         }
 
         /// <summary>
-        /// Errases agents from this tile
-        /// Goes through every member of the agents array until he 
-        /// founds a member with the same id
-        /// <summary>
-        public void moveAgentOut(Agent agent)
+        /// Move <see cref="Agent"/> out of this tile.
+        /// </summary>
+        /// <param name="agent">The <see cref="Agent"/> to move out.</param>
+        public void MoveAgentOut(Agent agent)
         {
             int indexOf = -1;
 
