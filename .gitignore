@@ -435,3 +435,6 @@ $RECYCLE.BIN/
 Properties/
 
 *.tsv
+
+# DocFx
+DocFx/
