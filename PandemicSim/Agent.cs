@@ -21,7 +21,7 @@ namespace PandemicSim
         /// <summary>
         /// sets the tile of this agent to a new one
         /// <summary>
-        public void setsetTile(Tile newTile) 
+        public void setTile(Tile newTile) 
         {
             this.tile = newTile;
         }
