@@ -32,7 +32,7 @@ namespace PandemicSim
         }
 
         /// </summary>
-        /// operator +
+        /// Operator +
         /// </summary>
         /// /// <param name="a"><see cref="Coord"/> a.</param>
         /// <param name="b"><see cref="Coord"/> b.</param>

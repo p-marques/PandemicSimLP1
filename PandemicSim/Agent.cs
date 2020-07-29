@@ -5,25 +5,31 @@ using System.Text;
 namespace PandemicSim
 {
     /// <summary>
-    /// this class represent the person on a tile and its states
+    /// This class represent the person on a tile and its states
     /// <summary>
     class Agent
     {
         /// <summary>
-        /// the tile where this agent is
+        /// The tile where this agent is
         /// <summary>
-        public Tile tile;
+        public Tile TileRef { get; private set; }
 
-        public bool isInfected { get; private set; }
+        public bool IsInfected { get; private set; }
 
-        public bool isDead { get; private set; }
+        public bool IsDead { get; private set; }
 
-        /// <summary>
-        /// sets the tile of this agent to a new one
-        /// <summary>
-        public void setTile(Tile newTile) 
+        public int Id { get; }
+
+        public Agent(int id) 
         {
-            this.tile = newTile;
+            this.Id = id;
+        }
+        /// <summary>
+        /// Sets the tile of this agent to a new one
+        /// <summary>
+        public void SetTile(Tile newTile) 
+        {
+            this.TileRef = newTile;
         }
 
     }

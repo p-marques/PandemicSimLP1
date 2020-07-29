@@ -10,45 +10,54 @@ namespace PandemicSim
     class Tile
     {
         /// <summary>
-        /// pos contains the coord cwith the position
+        /// pos contains the coord with the position
         /// <summary>
         public Coord Pos { get; }
 
         /// <summary>
-        /// repersents the corrent agent on this tile
+        /// Represents all agents on this tile
         /// <summary>
-        public Agent Agent { get; private set; }
+        public IList<Agent> Agents { get; }
+
+
 
         /// <summary>
-        /// bool that verefys if there is a agent in this tile
-        /// <summary>
-        public bool isOccupied => Agent != null;
-
-        /// <summary>
-        /// sets the position of the tile
+        /// Sets the position of the tile
         public Tile(int row, int column) 
         {
             Pos = new Coord(row, column);
+            Agents = new List<Agent>();
         }
 
         /// <summary>
-        /// moves agents to the tile
+        /// Moves agents to the tile
         /// <summary>
         public void moveAgentIn(Agent Agent) 
-        { 
-            if (!isOccupied) 
-            {
-                this.Agent = Agent;
-                Agent.setTile(this);
-            }
+        {
+            this.Agents.Add(Agent);
+            Agent.SetTile(this);
         }
 
         /// <summary>
-        /// errases agents from this tile
+        /// Errases agents from this tile
+        /// Goes through every member of the agents array until he 
+        /// founds a member with the same id
         /// <summary>
-        public void moveAgentOut()
+        public void moveAgentOut(Agent agent)
         {
-            this.Agent = null;
+            int indexOf = -1;
+
+            for (int i = 0; i < Agents.Count; i++)
+            {
+                if (Agents[i].Id == agent.Id)
+                {
+                    indexOf = i;
+                    break;
+                }
+            }
+
+            if (indexOf >= 0)
+                Agents.RemoveAt(indexOf);
         }
     }
 }
