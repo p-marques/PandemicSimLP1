@@ -5,8 +5,8 @@ using System.Text;
 namespace PandemicSim
 {
     /// <summary>
-    /// This class represent the person on a tile and its states
-    /// <summary>
+    /// An agent in the simulation.
+    /// </summary>
     public class Agent
     {
         /// <summary>
@@ -23,10 +23,10 @@ namespace PandemicSim
         /// Agent identifier.
         /// </summary>
         public int Id { get; }
-
+        
         /// <summary>
-        /// The tile where this agent is.
-        /// <summary>
+        /// The Agent's current Tile.
+        /// </summary>
         public Tile TileRef { get; private set; }
 
         /// <summary>
@@ -58,8 +58,10 @@ namespace PandemicSim
         }
 
         /// <summary>
-        /// Sets the tile of this agent to a new one.
-        /// <summary>
+        /// Sets the tile of the agent.
+        /// </summary>
+        /// <param name="newTile">The new <see cref="Tile"/> of the agent.
+        /// </param>
         public void SetTile(Tile newTile) 
         {
             this.TileRef = newTile;

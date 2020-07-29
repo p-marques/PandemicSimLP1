@@ -6,18 +6,18 @@ using System.Text;
 namespace PandemicSim
 {
     /// <summary>
-    /// Represents one location on the Grid.
-    /// <summary>
+    /// Represents a tile on the grid.
+    /// </summary>
     public class Tile
     {
         /// <summary>
         /// The position of the tile on the grid.
-        /// <summary>
+        /// </summary>
         public Coord Pos { get; }
 
         /// <summary>
-        /// Represents all agents on this tile.
-        /// <summary>
+        /// The agents in the tile.
+        /// </summary>
         public IList<Agent> Agents { get; }
 
         /// <summary>

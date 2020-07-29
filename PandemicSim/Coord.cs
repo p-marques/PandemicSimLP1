@@ -12,31 +12,33 @@ namespace PandemicSim
     /// </summary>
     public struct Coord
     {
-        /// </summary>
-        /// Row of the board
+        /// <summary>
+        /// Row of the grid.
         /// </summary>
         public int Row { get; }
 
-        /// </summary>
-        /// Column of the board
+        /// <summary>
+        /// Column of the grid.
         /// </summary>
         public int Column { get; }
 
+        /// <summary>
+        /// Constructor.
         /// </summary>
-        /// Constroctor
-        /// </summary>
+        /// <param name="row">The row of the grid.</param>
+        /// <param name="column">The column of the grid.</param>
         public Coord(int row, int column)
         {
             Column = column;
             Row = row;
         }
 
+        /// <summary>
+        /// Operator +.
         /// </summary>
-        /// Operator +
-        /// </summary>
-        /// /// <param name="a"><see cref="Coord"/> a.</param>
-        /// <param name="b"><see cref="Coord"/> b.</param>
-        /// <returns>The result of a + b.</returns>
+        /// <param name="X">The <see cref="Coord"/> X.</param>
+        /// <param name="Y">The <see cref="Coord"/> Y.</param>
+        /// <returns>The result of X + Y.</returns>
         public static Coord operator +(Coord X, Coord Y) =>
                                 new Coord(X.Row + Y.Row, X.Column + Y.Column);
     }

@@ -2,6 +2,10 @@
 
 namespace PandemicSim
 {
+    /// <summary>
+    /// Class holding <see cref="Main"/>, the starting point of the
+    /// application.
+    /// </summary>
     class Program
     {
         /// <summary>
