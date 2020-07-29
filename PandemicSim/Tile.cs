@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PandemicSim
@@ -18,6 +19,12 @@ namespace PandemicSim
         /// Represents all agents on this tile.
         /// <summary>
         public IList<Agent> Agents { get; }
+
+        /// <summary>
+        /// Flag indicating if any <see cref="Agent"/> in this tile is infected.
+        /// </summary>
+        public bool IsAnyAgentInfected =>
+            Agents.Where(x => x.IsInfected == true).Count() > 0;
 
         /// <summary>
         /// Creates instance of <see cref="Tile"/>.
@@ -60,6 +67,18 @@ namespace PandemicSim
 
             if (indexOf >= 0)
                 Agents.RemoveAt(indexOf);
+        }
+
+        /// <summary>
+        /// Infects every <see cref="Agent"/> in this <see cref="Tile"/>.
+        /// </summary>
+        /// <param name="round">The current round.</param>
+        public void SpreadVirus(int round)
+        {
+            for (int i = 0; i < Agents.Count; i++)
+            {
+                Agents[i].Infect(round);
+            }
         }
     }
 }

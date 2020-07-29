@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PandemicSim
@@ -31,8 +32,27 @@ namespace PandemicSim
         /// <summary>
         /// Flag indicating if any agent is still alive.
         /// </summary>
-        private bool IsAnyAgentAlive => agents.Where(x => x.IsDead == false)
-                                              .Count() > 0;
+        private bool IsAnyAgentAlive => agents.Length > DeadAgentCount;
+
+        /// <summary>
+        /// Number of healthy agents.
+        /// </summary>
+        private int HealthyAgentCount => agents.Length
+                                         - InfectedAgentCount
+                                         - DeadAgentCount;
+
+        /// <summary>
+        /// Number of infected agents.
+        /// </summary>
+        private int InfectedAgentCount => agents.Where(x => x.IsDead == false && 
+                                                          x.IsInfected == true)
+                                                .Count();
+
+        /// <summary>
+        /// Number of dead agents.
+        /// </summary>
+        private int DeadAgentCount => agents.Where(x => x.IsDead == true)
+                                            .Count();
 
         /// <summary>
         /// Creates a new instance of <see cref="Simulation"/>.
@@ -56,14 +76,74 @@ namespace PandemicSim
         /// </summary>
         public void Run()
         {
-            int roundCounter = 1;
+            string holder;
+            List<TurnReport> turnReports;
+            TurnReport turnReport;
 
-            for (; roundCounter <= simOptions.MaxTurns; roundCounter++)
+            turnReports = new List<TurnReport>();
+
+            if (!simOptions.ShowSimulation)
             {
-                // Main loop
-
-                // TODO Check if no more agents are alive
+                Console.WriteLine($"Simulation starts with {agents.Length} " +
+                                   "healthy agents.");
             }
+
+            for (int roundCounter = 1; roundCounter <= simOptions.MaxTurns; 
+                                       roundCounter++)
+            {
+                // For every Agents...
+                for (int k = 0; k < agents.Length; k++)
+                {
+                    if (!agents[k].IsDead)
+                    {
+                        // ...randomly move them.
+                        simGrid.RandomlyMoveAgent(rng, agents[k]);
+
+                        // If infected...
+                        if (agents[k].IsInfected)
+                        {
+                            // ...spread the virus.
+                            agents[k].TileRef.SpreadVirus(roundCounter);
+
+                            // Performs infection tick
+                            agents[k].InfectionTick(roundCounter);
+                        }
+                    }
+                }
+
+                // First infection
+                if (simOptions.FirstInfectionTurn == roundCounter)
+                {
+                    int randomAgent = rng.Next(0, agents.Length);
+
+                    agents[randomAgent].Infect(roundCounter);
+                }
+
+                if (!simOptions.ShowSimulation)
+                {
+                    holder = $"Turn {roundCounter}: ";
+                    holder += $"{HealthyAgentCount} healthy, ";
+                    holder += $"{InfectedAgentCount} infected ";
+                    holder += $"and {DeadAgentCount} dead.";
+
+                    Console.WriteLine(holder);
+                }
+
+                // If user asked to generate stats file
+                if (simOptions.OutputSimulationToFile)
+                {
+                    turnReport = new TurnReport(HealthyAgentCount,
+                                            InfectedAgentCount,
+                                            DeadAgentCount);
+
+                    turnReports.Add(turnReport);
+                }
+
+                if (!IsAnyAgentAlive)
+                    break;
+            }
+
+            // TODO Save file if user asked for it
         }
 
         /// <summary>
@@ -75,7 +155,7 @@ namespace PandemicSim
             {
                 int row, column;
 
-                agents[i] = new Agent(i);
+                agents[i] = new Agent(i, simOptions.InfectedLifeSpan);
 
                 row = rng.Next(0, simOptions.GridSize);
                 column = rng.Next(0, simOptions.GridSize);
