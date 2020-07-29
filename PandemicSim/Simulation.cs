@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using System.Text;
+using System.IO;
 
 namespace PandemicSim
 {
@@ -82,6 +86,20 @@ namespace PandemicSim
 
                 simGrid.PlaceAgent(agents[i], row, column);
             }
+        }
+
+        private void SaveReport(List<TurnReport> report) 
+        {
+            StringBuilder tvs = new StringBuilder();
+            string path = @"\ " + simOptions.OutputFileName + ".tvs";
+
+            foreach ( TurnReport linerport in report ) 
+            {
+                string line = linerport.Healthy + "," + linerport.Infected + "," + linerport.Dead;
+                tvs.AppendLine(line);
+            }
+
+            File.AppendAllText( path, tvs.ToString() );
         }
     }
 }
