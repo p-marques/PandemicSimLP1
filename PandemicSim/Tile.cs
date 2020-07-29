@@ -24,7 +24,11 @@ namespace PandemicSim
         /// Flag indicating if any <see cref="Agent"/> in this tile is infected.
         /// </summary>
         public bool IsAnyAgentInfected =>
-            Agents.Where(x => x.IsInfected == true).Count() > 0;
+            Agents.Where(x => x.IsInfected == true && x.IsDead == false)
+                  .Count() > 0;
+
+        public bool IsAnyAgentHere => Agents.Where(x => x.IsDead == false)
+                                            .Count() > 0;
 
         /// <summary>
         /// Creates instance of <see cref="Tile"/>.
@@ -79,6 +83,24 @@ namespace PandemicSim
             {
                 Agents[i].Infect(round);
             }
+        }
+
+        /// <summary>
+        /// Checks if any round 
+        /// </summary>
+        /// <param name="round"></param>
+        /// <returns></returns>
+        public bool GetAgentDiedInRound(int round)
+        {
+            for (int i = 0; i < Agents.Count; i++)
+            {
+                if (round == Agents[i].DeathRound)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -5,6 +5,11 @@ namespace PandemicSim
     class Program
     {
         /// <summary>
+        /// The UI Manager. Responsible for keeping the UI updated.
+        /// </summary>
+        public static UIManager UIManager { get; private set; }
+
+        /// <summary>
         /// Program stating point.
         /// </summary>
         /// <param name="args">Command line arguments.</param>
@@ -40,6 +45,9 @@ namespace PandemicSim
             }
             else
             {
+                // Create instance of the UI Manager
+                UIManager = new UIManager();
+
                 // Creates simulation instance
                 Simulation sim = new Simulation(options);
 

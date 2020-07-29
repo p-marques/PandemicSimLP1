@@ -35,6 +35,11 @@ namespace PandemicSim
         public bool IsInfected => infectedRound > 0;
 
         /// <summary>
+        /// The round number the agent died.
+        /// </summary>
+        public int DeathRound { get; private set; }
+
+        /// <summary>
         /// Flag indicating if the Agent is dead.
         /// </summary>
         public bool IsDead { get; private set; }
@@ -83,6 +88,7 @@ namespace PandemicSim
             if ((round - infectedRound) >= infectedLifespan)
             {
                 IsDead = true;
+                DeathRound = round;
             }
         }
     }

@@ -77,7 +77,7 @@ namespace PandemicSim
         /// </summary>
         public void Run()
         {
-            string holder;
+            TurnReport turnReport;
             List<TurnReport> turnReports = null;
 
             if (!simOptions.ShowSimulation)
@@ -117,15 +117,13 @@ namespace PandemicSim
                     agents[randomAgent].Infect(roundCounter);
                 }
 
-                if (!simOptions.ShowSimulation)
-                {
-                    holder = $"Turn {roundCounter}: ";
-                    holder += $"{HealthyAgentCount} healthy, ";
-                    holder += $"{InfectedAgentCount} infected ";
-                    holder += $"and {DeadAgentCount} dead.";
+                turnReport = new TurnReport(HealthyAgentCount,
+                                            InfectedAgentCount,
+                                            DeadAgentCount);
 
-                    Console.WriteLine(holder);
-                }
+                Program.UIManager
+                       .Update(roundCounter, turnReport, 
+                               simOptions.ShowSimulation, simGrid);
 
                 // If user asked to generate stats file
                 if (simOptions.OutputSimulationToFile)
@@ -133,9 +131,7 @@ namespace PandemicSim
                     if (turnReports == null)
                         turnReports = new List<TurnReport>();
 
-                    turnReports.Add(new TurnReport(HealthyAgentCount,
-                                                   InfectedAgentCount,
-                                                   DeadAgentCount));
+                    turnReports.Add(turnReport);
                 }
 
                 if (!IsAnyAgentAlive)

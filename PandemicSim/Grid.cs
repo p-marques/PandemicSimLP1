@@ -13,7 +13,7 @@ namespace PandemicSim
         /// <summary>
         /// The grid's tiles
         /// </summary>
-        private readonly Tile[][] tiles;
+        public Tile[][] Tiles { get; }
 
         /// <summary>
         /// Creates a new instance of <see cref="Grid"/>.
@@ -22,15 +22,15 @@ namespace PandemicSim
         /// is size x size</param>
         public Grid(int size)
         {
-            tiles = new Tile[size][];
+            Tiles = new Tile[size][];
 
             for (int i = 0; i < size; i++)
             {
-                tiles[i] = new Tile[size];
+                Tiles[i] = new Tile[size];
 
                 for (int k = 0; k < size; k++)
                 {
-                    tiles[i][k] = new Tile(i, k);
+                    Tiles[i][k] = new Tile(i, k);
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace PandemicSim
         /// <param name="column">The column index.</param>
         public void PlaceAgent(Agent agent, int row, int column)
         {
-            Tile tile = tiles[row][column];
+            Tile tile = Tiles[row][column];
 
             if (agent.TileRef != null)
             {
@@ -118,7 +118,7 @@ namespace PandemicSim
             Coord newPos = tile.Pos + delta;
 
             if (newPos.Row < 0 || newPos.Column < 0 || 
-                newPos.Row >= tiles.Length || newPos.Column >= tiles[0].Length)
+                newPos.Row >= Tiles.Length || newPos.Column >= Tiles[0].Length)
             {
                 return false;
             }
